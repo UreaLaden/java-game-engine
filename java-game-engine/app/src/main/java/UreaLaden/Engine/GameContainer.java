@@ -76,7 +76,6 @@ public class GameContainer implements Runnable
             if(render)
             {
                 renderer.clear();
-                //TODO: Render game
                 game.render(this,renderer);
                 window.update();
                 frames++;

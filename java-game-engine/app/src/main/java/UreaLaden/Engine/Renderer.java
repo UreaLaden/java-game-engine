@@ -1,6 +1,7 @@
 package UreaLaden.Engine;
-
+import UreaLaden.Engine.gfx.*;
 import java.awt.image.DataBufferInt;
+import java.util.Arrays;
 
 public class Renderer
 {
@@ -17,9 +18,23 @@ public class Renderer
 
     public void clear()
     {
-        for(int i=0;i<p.length;i++)
-        {
-            p[i] += 0;
+        Arrays.fill(p, 0);
+    }
+
+    public void setPixelValue(int x, int y, int value){
+        if((x < 0 || x >= pW || y < 0 || y >= pH)|| value == 0xffff00ff){
+         return;
+        }
+        p[x + y * pW] = value;
+    }
+
+    public void drawImage(Image image, int offsetX, int offsetY)
+    {
+        for(int y=0;y<image.getHeight();y++){
+            for(int x=0;x<image.getWidth();x++){
+                //Set pixel data
+                setPixelValue(x + offsetX,y + offsetY, image.getPixel()[x+ y * image.getWidth()]);
+            }
         }
     }
 }
