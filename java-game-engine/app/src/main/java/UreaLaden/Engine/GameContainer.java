@@ -4,12 +4,13 @@ public class GameContainer implements Runnable
 {
     private Thread thread;
     private Window window;
+    private Renderer renderer;
 
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0; //Cap updates at 60 frames per second
 
-    private int width = 320, height= 240;
-    private float scale = 6f;
+    private int width = 1600, height= 900;
+    private float scale = 1f;
     private String title = "UreaLaden.Engine v1.0";
 
     public GameContainer()
@@ -19,7 +20,7 @@ public class GameContainer implements Runnable
     public void start()
     {
         window = new Window(this);
-
+        renderer = new Renderer(this);
         thread = new Thread(this);
         thread.run(); //.run is for main thread
     }
@@ -67,6 +68,7 @@ public class GameContainer implements Runnable
 
             if(render)
             {
+                renderer.clear();
                 //TODO: Render game
                 window.update();
                 frames++;
@@ -127,5 +129,9 @@ public class GameContainer implements Runnable
     public static void main(String[] args){
         GameContainer gc = new GameContainer();
         gc.start();
+    }
+
+    public Window getWindow() {
+        return window;
     }
 }
