@@ -5,6 +5,8 @@ public class GameContainer implements Runnable
     private Thread thread;
     private Window window;
     private Renderer renderer;
+    private Input input;
+
 
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0; //Cap updates at 60 frames per second
@@ -21,6 +23,8 @@ public class GameContainer implements Runnable
     {
         window = new Window(this);
         renderer = new Renderer(this);
+        input = new Input(this);
+
         thread = new Thread(this);
         thread.run(); //.run is for main thread
     }
@@ -57,6 +61,10 @@ public class GameContainer implements Runnable
                 unprocessedTime -= UPDATE_CAP;
                 render = true; // only when we update
                 //TODO: Update game
+                System.out.println("x: " + input.getMouseX() + " y: " + input.getMouseY());
+
+                input.update();
+
                 if(frameTime >= 1.0)
                 {
                     frameTime = 0;
