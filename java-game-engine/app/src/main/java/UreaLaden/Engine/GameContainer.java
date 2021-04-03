@@ -6,7 +6,7 @@ public class GameContainer implements Runnable
     private Window window;
     private Renderer renderer;
     private Input input;
-
+    private AbstractGame game;
 
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0; //Cap updates at 60 frames per second
@@ -15,9 +15,9 @@ public class GameContainer implements Runnable
     private float scale = 1f;
     private String title = "UreaLaden.Engine v1.0";
 
-    public GameContainer()
+    public GameContainer(AbstractGame game)
     {
-
+        this.game = game;
     }
     public void start()
     {
@@ -60,9 +60,8 @@ public class GameContainer implements Runnable
                 //Updates twice if frames freeze
                 unprocessedTime -= UPDATE_CAP;
                 render = true; // only when we update
-                //TODO: Update game
-                System.out.println("x: " + input.getMouseX() + " y: " + input.getMouseY());
 
+                game.update(this,(float)UPDATE_CAP);
                 input.update();
 
                 if(frameTime >= 1.0)
@@ -78,6 +77,7 @@ public class GameContainer implements Runnable
             {
                 renderer.clear();
                 //TODO: Render game
+                game.render(this,renderer);
                 window.update();
                 frames++;
 
@@ -118,6 +118,10 @@ public class GameContainer implements Runnable
         this.height = height;
     }
 
+    public Input getInput() {
+        return input;
+    }
+
     public float getScale() {
         return scale;
     }
@@ -132,11 +136,6 @@ public class GameContainer implements Runnable
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public static void main(String[] args){
-        GameContainer gc = new GameContainer();
-        gc.start();
     }
 
     public Window getWindow() {
