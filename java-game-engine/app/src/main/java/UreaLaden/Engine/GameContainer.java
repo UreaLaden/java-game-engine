@@ -11,8 +11,8 @@ public class GameContainer implements Runnable
     private boolean running = false;
     private final double UPDATE_CAP = 1.0 / 60.0; //Cap updates at 60 frames per second
 
-    private int width = 1600, height= 900;
-    private float scale = 1f;
+    private int width = 320, height= 240;
+    private float scale = 3f;
     private String title = "UreaLaden.Engine v1.0";
 
     public GameContainer(AbstractGame game)
